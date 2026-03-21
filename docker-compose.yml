@@ -1,5 +1,3 @@
-version: "3.9"
-
 services:
     # Demo App (Backend/Frontend)
   app:
