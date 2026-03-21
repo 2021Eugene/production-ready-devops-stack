@@ -1,0 +1,24 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  docker-compose-check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Create .env file for CI
+        run: |
+          echo "POSTGRES_USER=devops" >> .env
+          echo "POSTGRES_PASSWORD=ci_password" >> .env
+          echo "POSTGRES_DB=appdb" >> .env
+
+      - name: Validate Docker Compose configuration
+        run: docker compose config
