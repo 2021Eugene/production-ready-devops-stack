@@ -22,3 +22,6 @@ jobs:
 
       - name: Validate Docker Compose configuration
         run: docker compose config
+
+      - name: Build custom app image
+        run: docker build -t devops-demo-app ./docker/app 

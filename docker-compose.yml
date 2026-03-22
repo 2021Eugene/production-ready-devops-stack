@@ -1,7 +1,7 @@
 services:
     # Demo App (Backend/Frontend)
   app:
-    image: traefik/whoami
+    build: ./docker/app
     container_name: demo_app
     restart: always
     networks:
