@@ -4,6 +4,8 @@ services:
     build: ./docker/app
     container_name: demo_app
     restart: always
+    cpus: "0.50"
+    mem_limit: 128m
     networks:
       - devops_net
 
@@ -11,6 +13,8 @@ services:
     image: postgres:15
     container_name: demo_db
     restart: always
+    cpus: "1.00"
+    mem_limit: 512m
     environment:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
@@ -29,6 +33,9 @@ services:
   nginx:
     image: nginx:latest
     container_name: reverse_proxy
+    restart: always
+    cpus: "0.50"
+    mem_limit: 128m
     ports:
       - "8080:80"
     volumes:
