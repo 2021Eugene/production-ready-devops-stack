@@ -71,6 +71,29 @@ production-ready-devops-stack/
 └── README.md
 ```
 
+## Architecture Diagram
+
+```text
+Browser
+   |
+   v
+Nginx Reverse Proxy
+   |
+   v
+Custom App Container
+   |
+   v
+PostgreSQL Database
+
+Configuration:
+.env.example -> .env -> PostgreSQL
+
+CI:
+GitHub Actions
+ ├─ Docker Compose validation
+ └─ Docker image build validation    
+```
+
 ## How to Run
 
 ### 1. Clone the repository
@@ -108,7 +131,6 @@ docker ps
 
 ```text
 http://localhost:8080
-
 ```
 
 ## Services
