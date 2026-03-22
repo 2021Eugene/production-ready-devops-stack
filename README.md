@@ -1,5 +1,7 @@
 # Production-Ready DevOps Stack
 
+[![CI](https://github.com/2021Eugene/production-ready-devops-stack/actions/workflows/ci.yml/badge.svg)](https://github.com/2021Eugene/production-ready-devops-stack/actions/workflows/ci.yml)
+
 ## Overview
 
 This project is a small DevOps-style containerized stack built with Docker Compose.
