@@ -7,20 +7,38 @@
 This project is a small DevOps-style containerized stack built with Docker Compose.
 
 It includes:
-- an application container based on `traefik/whoami`
+- a custom application container built from `docker/app/Dockerfile`
 - an Nginx reverse proxy
 - a PostgreSQL database
-- environment variable separation with `.env`
+- environment-based configuration using `.env`
 - persistent database storage with Docker volumes
 - a custom Docker network for inter-service communication
+- PostgreSQL healthcheck
+- resource limits for services
+- GitHub Actions CI validation
 
 The goal of this project is to demonstrate practical DevOps fundamentals:
 - container orchestration with Docker Compose
 - reverse proxy configuration
 - service separation
 - environment-based configuration
+- Docker image build validation
+- healthchecks and service control
 - clean Git history
 - production-oriented project structure
+
+## Features
+
+- Multi-container Docker Compose setup
+- Custom application image build from `docker/app/Dockerfile`
+- Nginx reverse proxy for incoming HTTP traffic
+- PostgreSQL 15 with persistent named volume
+- Environment-based configuration using `.env`
+- Custom Docker network for service communication
+- PostgreSQL healthcheck with `pg_isready`
+- Resource limits for application services
+- GitHub Actions CI for Docker Compose validation
+- GitHub Actions CI for Docker image build validation
 
 ## Tech Stack
 
@@ -28,7 +46,7 @@ The goal of this project is to demonstrate practical DevOps fundamentals:
 - Docker Compose
 - Nginx
 - PostgreSQL 15
-- Traefik Whoami
+- GitHub Actions
 - WSL2
 - VS Code
 - Git / GitHub
@@ -37,7 +55,13 @@ The goal of this project is to demonstrate practical DevOps fundamentals:
 
 ```text
 production-ready-devops-stack/
+├── .github/
+│   └── workflows/
+│       └── ci.yml
 ├── docker/
+│   ├── app/
+│   │   ├── Dockerfile
+│   │   └── index.html
 │   └── nginx/
 │       └── nginx.conf
 ├── .env.example
@@ -52,7 +76,7 @@ production-ready-devops-stack/
 ### 1. Clone the repository
 
 ```bash
-git clone <your-repo-url>
+git clone https://github.com/2021Eugene/production-ready-devops-stack.git
 cd production-ready-devops-stack
 ```
 
@@ -71,7 +95,7 @@ You can use `.env.example` as a template.
 ### 3. Start the stack
 
 ```bash
-docker compose up -d
+docker compose up --build -d
 ```
 
 ### 4. Verify running containers
@@ -84,12 +108,13 @@ docker ps
 
 ```text
 http://localhost:8080
+
 ```
 
 ## Services
 
 ### app
-A lightweight demo application based on `traefik/whoami`.
+A custom lightweight application container built from `docker/app/Dockerfile`.
 
 ### nginx
 Acts as a reverse proxy and forwards incoming requests to the application container.
@@ -107,26 +132,55 @@ The PostgreSQL service uses environment variables from the local `.env` file:
 
 The repository includes `.env.example`, while `.env` is ignored via `.gitignore`.
 
+## Healthcheck
+
+The PostgreSQL service includes a healthcheck using `pg_isready`.
+
+This allows Docker to verify whether the database is ready to accept connections.
+
+## CI
+
+This project includes a GitHub Actions workflow located at:
+
+```text
+.github/workflows/ci.yml
+```
+
+The CI pipeline currently validates:
+
+- Docker Compose configuration
+- Docker image build process
+
 ## Current Status
 
 Implemented:
+
 - Docker Compose multi-container setup
+- Custom application container
 - Nginx reverse proxy
 - PostgreSQL with persistent volume
-- custom Docker network
-- `.env`-based configuration
-- improved `.gitignore`
+- Custom Docker network
+- .env-based configuration
+- PostgreSQL healthcheck
+- Resource limits
+- GitHub Actions CI
+- Improved .gitignore
+- Project README
+- CI status badge
 
 ## Next Steps
 
 Planned improvements:
-- add a real custom application container
-- add healthcheck for a suitable service
-- create GitHub Actions workflow
-- improve documentation
-- add infrastructure diagram
-- add CI validation for Docker Compose
+
+- add Prometheus monitoring
+- add Grafana dashboards
+- add architecture diagram
+- improve production-style documentation
+- extend CI pipeline
+- add CD workflow
+- add container security checks
 
 ## Notes
 
-This project is being built step by step as a hands-on DevOps learning and portfolio project.
+This project is being built step by step as a hands-on DevOps portfolio project.
+
