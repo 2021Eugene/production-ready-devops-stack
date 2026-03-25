@@ -63,9 +63,20 @@ services:
       - "3000:3000"
     networks:
       - devops_net
+    volumes:
+      - grafana_data:/var/lib/grafana
+  node_exporter:
+    image: prom/node-exporter:latest
+    container_name: node_exporter
+    restart: always
+    ports:
+      - "9100:9100"
+    networks:
+      - devops_net
         
 volumes:
   db_data:
+  grafana_data:
 
 networks:
   devops_net:
