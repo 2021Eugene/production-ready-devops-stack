@@ -22,6 +22,7 @@ It includes:
 - Node Exporter system metrics
 - PostgreSQL Exporter database metrics
 - GitHub Actions Trivy security scan
+- GitHub Actions basic CD workflow
 
 The goal of this project is to demonstrate practical DevOps fundamentals:
 - container orchestration with Docker Compose
@@ -51,6 +52,7 @@ The goal of this project is to demonstrate practical DevOps fundamentals:
 - Node Exporter for host and system metrics
 - PostgreSQL Exporter for database metrics
 - GitHub Actions Trivy security scan for container vulnerabilities
+- GitHub Actions manual CD workflow simulation
 
 ## Tech Stack
 
@@ -73,7 +75,8 @@ production-ready-devops-stack/
 ├── .github/
 │   └── workflows/
 │       ├── ci.yml
-│       └── trivy.yml
+│       ├── trivy.yml
+│       └── cd.yml
 ├── docker/
 │   ├── app/
 │   │   ├── Dockerfile
@@ -114,11 +117,12 @@ PostgreSQL Exporter --> Prometheus --> Grafana
 Configuration:
 .env.example -> .env -> PostgreSQL
 
-CI / Security:
+CI / CD / Security:
 GitHub Actions
  ├─ Docker Compose validation
  ├─ Docker image build validation
- └─ Trivy security scan
+ ├─ Trivy security scan
+ └─ Manual CD workflow simulation
 ```
 
 ## How to Run
@@ -220,7 +224,7 @@ The monitoring stack is configured to expose and visualize:
 
 ### Dashboard Example
 
-![Grafana System Dashboard: Cpu usage, Disk usage, Memory usage](docs/images/GrafanaDashboard.png)
+![Grafana System Dashboard: CPU usage, Disk usage, Memory usage](docs/images/GrafanaDashboard.png)
 
 > Note: In WSL2 + Docker environments, disk metrics can vary depending on filesystem visibility and mount propagation.
 
@@ -250,6 +254,19 @@ The security workflow:
 - scans the image with Trivy
 - fails on HIGH and CRITICAL vulnerabilities
 
+## CD
+
+This project includes a basic GitHub Actions CD workflow located at:
+
+```text
+.github/workflows/cd.yml
+```
+The CD workflow:
+
+- is triggered manually with workflow_dispatch
+- builds the custom application image
+- simulates a deployment stage
+
 ## Current Status
 
 Implemented:
@@ -271,6 +288,7 @@ Implemented:
 - Trivy container security scan
 - Architecture diagram
 - Improved `.gitignore`
+- Basic CD workflow simulation
 - Project README and setup guide
 
 ## Next Steps
@@ -278,7 +296,6 @@ Implemented:
 Planned improvements:
 
 - extend CI pipeline with additional validation
-- add a basic CD workflow
 - improve monitoring coverage for reverse proxy
 - add final dashboard screenshots to the repository
 
