@@ -16,9 +16,7 @@ jobs:
 
       - name: Create .env file for CI
         run: |
-          echo "POSTGRES_USER=devops" >> .env
-          echo "POSTGRES_PASSWORD=ci_password" >> .env
-          echo "POSTGRES_DB=appdb" >> .env
+          cp .env.example .env
 
       - name: Validate Docker Compose configuration
         run: docker compose config
