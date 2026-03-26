@@ -207,7 +207,7 @@ The monitoring stack is configured to expose and visualize:
 
 ### Dashboard Example
 
-![Grafana System Dashboard](docs/images/grafana-system-dashboard.png)
+![Grafana System Dashboard](docs/images/GrafanaDashboard.png)
 
 > Note: In WSL2 + Docker environments, disk metrics can vary depending on filesystem visibility and mount propagation.
 
