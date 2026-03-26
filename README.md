@@ -16,6 +16,9 @@ It includes:
 - PostgreSQL healthcheck
 - resource limits for services
 - GitHub Actions CI validation
+- Prometheus monitoring
+- Grafana dashboards
+- Node Exporter system metrics
 
 The goal of this project is to demonstrate practical DevOps fundamentals:
 - container orchestration with Docker Compose
@@ -24,6 +27,7 @@ The goal of this project is to demonstrate practical DevOps fundamentals:
 - environment-based configuration
 - Docker image build validation
 - healthchecks and service control
+- monitoring and observability
 - clean Git history
 - production-oriented project structure
 
@@ -39,6 +43,9 @@ The goal of this project is to demonstrate practical DevOps fundamentals:
 - Resource limits for application services
 - GitHub Actions CI for Docker Compose validation
 - GitHub Actions CI for Docker image build validation
+- Prometheus service for metrics collection
+- Grafana service for dashboards and visualization
+- Node Exporter for host and system metrics
 
 ## Tech Stack
 
@@ -46,6 +53,9 @@ The goal of this project is to demonstrate practical DevOps fundamentals:
 - Docker Compose
 - Nginx
 - PostgreSQL 15
+ Prometheus
+- Grafana
+- Node Exporter
 - GitHub Actions
 - WSL2
 - VS Code
@@ -64,6 +74,12 @@ production-ready-devops-stack/
 │   │   └── index.html
 │   └── nginx/
 │       └── nginx.conf
+├── docs/
+│   └── images/
+│       └── grafana-system-dashboard.png
+├── monitoring/
+│   └── prometheus/
+│       └── prometheus.yml
 ├── .env.example
 ├── .gitignore
 ├── docker-compose.yml
@@ -84,6 +100,9 @@ Custom App Container
    |
    v
 PostgreSQL Database
+
+Monitoring:
+Node Exporter --> Prometheus --> Grafana
 
 Configuration:
 .env.example -> .env -> PostgreSQL
@@ -130,7 +149,10 @@ docker ps
 ### 5. Open in browser
 
 ```text
-http://localhost:8080
+Application:   http://localhost:8080
+Prometheus:    http://localhost:9090
+Grafana:       http://localhost:3000
+Node Exporter: http://localhost:9100/metrics
 ```
 
 ## Services
@@ -143,6 +165,15 @@ Acts as a reverse proxy and forwards incoming requests to the application contai
 
 ### postgres
 Provides persistent PostgreSQL storage using a named Docker volume.
+
+### prometheus
+Collects and stores metrics from configured targets.
+
+### grafana
+Provides dashboards and visualization for Prometheus metrics.
+
+### node_exporter
+Exports system metrics for monitoring.
 
 ## Environment Variables
 
@@ -159,6 +190,26 @@ The repository includes `.env.example`, while `.env` is ignored via `.gitignore`
 The PostgreSQL service includes a healthcheck using `pg_isready`.
 
 This allows Docker to verify whether the database is ready to accept connections.
+
+## Monitoring
+
+This project includes:
+
+- Prometheus for metrics collection
+- Grafana for dashboards and visualization
+- Node Exporter for system metrics
+
+The monitoring stack is configured to expose and visualize:
+- CPU usage
+- memory usage
+- disk usage
+- service and system metrics
+
+### Dashboard Example
+
+![Grafana System Dashboard](docs/images/grafana-system-dashboard.png)
+
+> Note: In WSL2 + Docker environments, disk metrics can vary depending on filesystem visibility and mount propagation.
 
 ## CI
 
@@ -186,23 +237,24 @@ Implemented:
 - PostgreSQL healthcheck
 - Resource limits
 - GitHub Actions CI
-- Improved .gitignore
-- Project README
 - CI status badge
+- Prometheus monitoring
+- Grafana dashboards
+- Node Exporter metrics
+- Architecture diagram
+- Improved `.gitignore`
+- Project README and setup guide
 
 ## Next Steps
 
 Planned improvements:
 
-- add Prometheus monitoring
-- add Grafana dashboards
-- add architecture diagram
-- improve production-style documentation
-- extend CI pipeline
-- add CD workflow
+- extend CI pipeline with additional validation
+- add a basic CD workflow
 - add container security checks
+- improve monitoring coverage for database and reverse proxy
+- add final dashboard screenshots to the repository
 
 ## Notes
 
 This project is being built step by step as a hands-on DevOps portfolio project.
-
