@@ -1,6 +1,7 @@
 # Production-Ready DevOps Stack
 
 [![CI](https://github.com/2021Eugene/production-ready-devops-stack/actions/workflows/ci.yml/badge.svg)](https://github.com/2021Eugene/production-ready-devops-stack/actions/workflows/ci.yml)
+[![Trivy](https://github.com/2021Eugene/production-ready-devops-stack/actions/workflows/trivy.yml/badge.svg)](https://github.com/2021Eugene/production-ready-devops-stack/actions/workflows/trivy.yml)
 
 ## Overview
 
@@ -19,6 +20,8 @@ It includes:
 - Prometheus monitoring
 - Grafana dashboards
 - Node Exporter system metrics
+- PostgreSQL Exporter database metrics
+- GitHub Actions Trivy security scan
 
 The goal of this project is to demonstrate practical DevOps fundamentals:
 - container orchestration with Docker Compose
@@ -46,6 +49,8 @@ The goal of this project is to demonstrate practical DevOps fundamentals:
 - Prometheus service for metrics collection
 - Grafana service for dashboards and visualization
 - Node Exporter for host and system metrics
+- PostgreSQL Exporter for database metrics
+- GitHub Actions Trivy security scan for container vulnerabilities
 
 ## Tech Stack
 
@@ -53,7 +58,7 @@ The goal of this project is to demonstrate practical DevOps fundamentals:
 - Docker Compose
 - Nginx
 - PostgreSQL 15
- Prometheus
+- Prometheus
 - Grafana
 - Node Exporter
 - GitHub Actions
@@ -67,7 +72,8 @@ The goal of this project is to demonstrate practical DevOps fundamentals:
 production-ready-devops-stack/
 ├── .github/
 │   └── workflows/
-│       └── ci.yml
+│       ├── ci.yml
+│       └── trivy.yml
 ├── docker/
 │   ├── app/
 │   │   ├── Dockerfile
@@ -76,7 +82,7 @@ production-ready-devops-stack/
 │       └── nginx.conf
 ├── docs/
 │   └── images/
-│       └── grafana-system-dashboard.png
+│       └── GrafanaDashboard.png
 ├── monitoring/
 │   └── prometheus/
 │       └── prometheus.yml
@@ -103,14 +109,16 @@ PostgreSQL Database
 
 Monitoring:
 Node Exporter --> Prometheus --> Grafana
+PostgreSQL Exporter --> Prometheus --> Grafana
 
 Configuration:
 .env.example -> .env -> PostgreSQL
 
-CI:
+CI / Security:
 GitHub Actions
  ├─ Docker Compose validation
- └─ Docker image build validation    
+ ├─ Docker image build validation
+ └─ Trivy security scan
 ```
 
 ## How to Run
@@ -166,6 +174,9 @@ Acts as a reverse proxy and forwards incoming requests to the application contai
 ### postgres
 Provides persistent PostgreSQL storage using a named Docker volume.
 
+### postgres-exporter
+Exports PostgreSQL metrics for Prometheus monitoring.
+
 ### prometheus
 Collects and stores metrics from configured targets.
 
@@ -198,16 +209,18 @@ This project includes:
 - Prometheus for metrics collection
 - Grafana for dashboards and visualization
 - Node Exporter for system metrics
+- PostgreSQL Exporter for database metrics
 
 The monitoring stack is configured to expose and visualize:
 - CPU usage
-- memory usage
-- disk usage
-- service and system metrics
+- Memory usage
+- Disk usage
+- PostgreSQL Up
+- PostgreSQL Active Connections
 
 ### Dashboard Example
 
-![Grafana System Dashboard](docs/images/GrafanaDashboard.png)
+![Grafana System Dashboard: Cpu usage, Disk usage, Memory usage](docs/images/GrafanaDashboard.png)
 
 > Note: In WSL2 + Docker environments, disk metrics can vary depending on filesystem visibility and mount propagation.
 
@@ -223,6 +236,19 @@ The CI pipeline currently validates:
 
 - Docker Compose configuration
 - Docker image build process
+
+## Security
+
+This project includes a dedicated GitHub Actions workflow located at:
+
+```text
+.github/workflows/trivy.yml
+```
+The security workflow:
+
+- builds the custom application image
+- scans the image with Trivy
+- fails on HIGH and CRITICAL vulnerabilities
 
 ## Current Status
 
@@ -241,6 +267,8 @@ Implemented:
 - Prometheus monitoring
 - Grafana dashboards
 - Node Exporter metrics
+- PostgreSQL Exporter metrics
+- Trivy container security scan
 - Architecture diagram
 - Improved `.gitignore`
 - Project README and setup guide
@@ -251,8 +279,7 @@ Planned improvements:
 
 - extend CI pipeline with additional validation
 - add a basic CD workflow
-- add container security checks
-- improve monitoring coverage for database and reverse proxy
+- improve monitoring coverage for reverse proxy
 - add final dashboard screenshots to the repository
 
 ## Notes
